@@ -26,11 +26,11 @@ const MovieDetail = () => {
         color: "white",
         minHeight: "100vh",
         fontFamily: "Arial, sans-serif",
-        paddingTop: "80px", // Space for navbar
-        paddingBottom: "50px", // Extra spacing at bottom
+        paddingTop: "80px",
+        paddingBottom: "50px",
       }}
     >
-      {/* BACKDROP IMAGE & MOVIE DETAILS */}
+      {/* Movie Details Section */}
       <div
         style={{
           background: `linear-gradient(to right, rgba(20, 20, 20, 0.9), rgba(10, 10, 30, 0.7)), url(${IMAGE_BASE_URL}${movie.backdrop_path})`,
@@ -39,10 +39,10 @@ const MovieDetail = () => {
           padding: "60px 10%",
           display: "flex",
           alignItems: "center",
-          flexDirection: "row", // Default desktop layout
+          flexDirection: "row",
         }}
       >
-        {/* MOVIE POSTER */}
+        {/* Movie Poster */}
         <img
           src={`${IMAGE_BASE_URL}${movie.poster_path}`}
           alt={movie.title}
@@ -54,8 +54,11 @@ const MovieDetail = () => {
           }}
         />
 
-        {/* MOVIE DETAILS */}
-        <div style={{ marginLeft: "40px", maxWidth: "600px" }}>
+        {/* Movie Information */}
+        <div
+          className="movie-info"
+          style={{ marginLeft: "40px", maxWidth: "600px" }}
+        >
           <h1
             style={{
               fontSize: "32px",
@@ -67,19 +70,26 @@ const MovieDetail = () => {
           >
             {movie.title}
           </h1>
-          <p style={{ fontSize: "16px", opacity: "0.9", color: "#ddd" }}>
-            ⭐ <span style={{ color: "#ffcc00" }}>{movie.vote_average}</span> |
-            ⏳ {movie.runtime} min | 🎭{" "}
-            <span style={{ color: "#ff5733" }}>
-              {movie.genres.map((g) => g.name).join(", ")}
-            </span>
-          </p>
-          <p style={{ fontSize: "16px", opacity: "0.9", color: "#ddd" }}>
-            📅 Release Date:{" "}
-            <span style={{ color: "#00ffcc" }}>{movie.release_date}</span>
-          </p>
 
-          {/* OVERVIEW */}
+          {/* Step-by-step Information */}
+          <div style={{ fontSize: "16px", opacity: "0.9", color: "#ddd" }}>
+            <p>
+              ⭐ <span style={{ color: "#ffcc00" }}>{movie.vote_average}</span>
+            </p>
+            <p> 🕔 {movie.runtime} min</p>
+            <p>
+              🎭{" "}
+              <span style={{ color: "#ff5733" }}>
+                {movie.genres.map((g) => g.name).join(", ")}
+              </span>
+            </p>
+            <p>
+              📅 Release Date:{" "}
+              <span style={{ color: "#00ffcc" }}>{movie.release_date}</span>
+            </p>
+          </div>
+
+          {/* Overview */}
           <h2
             style={{
               marginTop: "20px",
@@ -96,7 +106,7 @@ const MovieDetail = () => {
         </div>
       </div>
 
-      {/* CAST SECTION */}
+      {/* Cast Section */}
       <div style={{ margin: "60px auto 80px", textAlign: "center" }}>
         <h2
           style={{
@@ -161,27 +171,37 @@ const MovieDetail = () => {
         </div>
       </div>
 
-      {/* MEDIA QUERY FOR MOBILE VIEW - ONLY AFFECTS INSPECT MODE */}
+      {/* CSS for INSPECT MODE Adjustments */}
       <style>
         {`
           @media (max-width: 768px) {
-            div[style*="flex-direction: row"] {
-              flex-direction: column !important;
+            /* Center-align movie info in inspect mode */
+            .movie-info {
               text-align: center;
-              padding: 30px 5%;
+              margin-left: 0 !important;
+              max-width: 100% !important;
+              padding: 20px;
             }
 
+            /* Movie Details Step-by-Step Arrangement */
+            .movie-info div {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: 5px;
+            }
+
+            /* Make poster smaller in inspect mode */
             img[alt="${movie.title}"] {
               width: 200px !important;
               margin: 0 auto 20px;
             }
 
-            div[style*="marginLeft: 40px"] {
-              margin-left: 0 !important;
-            }
-
-            div[style*="maxWidth: 600px"] {
-              max-width: 100% !important;
+            /* Ensure movie details section is centered */
+            div[style*="flex-direction: row"] {
+              flex-direction: column !important;
+              align-items: center !important;
+              padding: 30px 5%;
             }
           }
         `}
